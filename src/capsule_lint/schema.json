@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Capsule v1",
+  "type": "object",
+  "required": ["schema_version", "capsule_id", "created_at", "source_revision", "document", "summary", "decisions", "obligations", "evidence"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "capsule_id": {"type": "string", "minLength": 1},
+    "created_at": {"type": "string", "format": "date-time"},
+    "source_revision": {"type": "string", "minLength": 1},
+    "document": {"type": "string", "minLength": 1},
+    "summary": {"type": "string", "minLength": 1},
+    "decisions": {"type": "array", "items": {"$ref": "#/$defs/decision"}},
+    "obligations": {"type": "array", "items": {"$ref": "#/$defs/obligation"}},
+    "evidence": {"type": "array", "items": {"$ref": "#/$defs/evidence"}},
+    "assumptions": {"type": "array"},
+    "dependencies": {"type": "array"}
+  },
+  "$defs": {
+    "decision": {"type": "object", "required": ["id", "statement", "status", "evidence_ids"], "properties": {"id": {"type": "string"}, "statement": {"type": "string"}, "status": {"enum": ["active", "superseded"]}, "supersedes": {"type": ["string", "null"]}, "evidence_ids": {"type": "array", "items": {"type": "string"}}, "topic_key": {"type": "string"}}},
+    "obligation": {"type": "object", "required": ["id", "description", "status", "evidence_ids"], "properties": {"id": {"type": "string"}, "description": {"type": "string"}, "status": {"enum": ["open", "blocked", "done"]}, "owner": {"type": ["string", "null"]}, "next_action": {"type": ["string", "null"]}, "blocker": {"type": ["string", "null"]}, "evidence_ids": {"type": "array", "items": {"type": "string"}}}},
+    "evidence": {"type": "object", "required": ["id", "type", "ref", "revision", "captured_at"], "properties": {"id": {"type": "string"}, "type": {"enum": ["file", "url", "command", "test"]}, "ref": {"type": "string"}, "revision": {"type": "string"}, "captured_at": {"type": "string", "format": "date-time"}, "content_hash": {"type": "string"}}}
+  }
+}

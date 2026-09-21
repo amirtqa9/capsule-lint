@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "capsule-lint"
+version = "0.2.0"
+description = "Deterministic validation for agent context handoffs"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+yaml = ["PyYAML>=6"]
+
+[project.scripts]
+capsule-lint = "capsule_lint.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+capsule_lint = ["schema.json"]
